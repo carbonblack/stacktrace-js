@@ -24,7 +24,7 @@
   "dependencies": {
     "error-stack-parser": "^2.0.3",
     "stack-generator": "^2.0.3",
-    "stacktrace-gps": "git+ssh://git@github.com:carbonblack/stacktrace-gps.git"
+    "stacktrace-gps": "git+ssh://git@github.com:carbonblack/stacktrace-gps.git#82178da8bbd7ea4c74fcf121a1a72cbe0ae75d35"
   },
   "devDependencies": {
     "browserify": "^16.5.0",
