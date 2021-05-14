@@ -7,7 +7,7 @@
     "Oliver Salzburg (https://github.com/oliversalzburg)",
     "Ben Gourley (https://github.com/bengourley)"
   ],
-  "version": "2.0.0",
+  "version": "2.0.2",
   "license": "MIT",
   "keywords": [
     "stacktrace",
@@ -22,43 +22,42 @@
     "url": "git://github.com/stacktracejs/stacktrace.js.git"
   },
   "dependencies": {
-    "error-stack-parser": "^2.0.3",
-    "stack-generator": "^2.0.3",
+    "error-stack-parser": "^2.0.6",
+    "stack-generator": "^2.0.5",
     "stacktrace-gps": "git+ssh://git@github.com:carbonblack/stacktrace-gps.git"
   },
   "devDependencies": {
-    "browserify": "^16.5.0",
-    "colors": "^1.3.3",
-    "del": "^5.0.0",
-    "es6-promise": "^4.2.8",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-jshint": "^2.1.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
-    "jasmine": "^3.4.0",
-    "jasmine-ajax": "^4.0.0",
-    "jasmine-core": "^3.4.0",
-    "jscs": "^3.0.7",
-    "jshint": "^2.10.2",
-    "json3": "^3.3.3",
-    "karma": "^4.2.0",
+    "browserify": "^16.3.0",
+    "colors": "^1.1.2",
+    "del": "^3.0.0",
+    "es6-promise": "^3.1.2",
+    "eslint": "^6.8.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.12.0",
+    "gulp-uglify": "^1.5.1",
+    "jasmine": "^2.7.0",
+    "jasmine-ajax": "^3.2.0",
+    "jasmine-core": "^2.7.0",
+    "jsdoc-dash-template": "^2.1.0",
+    "json3": "^3.3.2",
+    "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage": "^1.1.2",
+    "karma-coverage": "^2.0.1",
+    "karma-coveralls": "^2.1.0",
     "karma-firefox-launcher": "^1.2.0",
     "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^2.0.1",
+    "karma-jasmine": "^1.1.2",
     "karma-jasmine-ajax": "^0.1.13",
     "karma-opera-launcher": "^1.0.0",
-    "karma-phantomjs2-launcher": "^0.5.0",
+    "karma-phantomjs-launcher": "^1.0.4",
     "karma-safari-launcher": "^1.0.0",
     "karma-sauce-launcher": "^2.0.2",
     "karma-spec-reporter": "^0.0.32",
-    "run-sequence": "^2.2.1",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "run-sequence": "^1.1.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "bugs": {
     "url": "https://github.com/stacktracejs/stacktrace.js/issues"
@@ -69,9 +68,15 @@
     "CHANGELOG.md",
     "README.md",
     "stacktrace.js",
+    "stacktrace-js.d.ts",
     "dist/"
   ],
+  "typings": "./stacktrace-js.d.ts",
   "scripts": {
-    "test": "gulp test"
+    "lint": "eslint --fix polyfills.js stacktrace.js spec/",
+    "prepare": "gulp dist",
+    "test": "karma start karma.conf.js --single-run",
+    "test-pr": "karma start karma.conf.js --single-run --browsers Firefox,Chrome_Travis",
+    "test-ci": "karma start karma.conf.ci.js --single-run"
   }
 }
