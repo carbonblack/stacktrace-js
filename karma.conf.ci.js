@@ -1,49 +1,11 @@
-module.exports = function(config) {
+module.exports = function (config) {
     'use strict';
     if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
         console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.');
         process.exit(1);
     }
 
-    // Commented some of these out just so CI doesn't take forever.
-    // Check out https://saucelabs.com/platforms for all browser/platform combos
     var customLaunchers = {
-        slIOS9: {
-            appiumVersion: '1.6.3',
-            base: 'SauceLabs',
-            browserName: 'Safari',
-            deviceName: 'iPhone 6s Simulator',
-            deviceOrientation: 'portrait',
-            platformName: 'iOS',
-            platformVersion: '9.3'
-        },
-        slIOS10: {
-            appiumVersion: '1.6.3',
-            base: 'SauceLabs',
-            browserName: 'Safari',
-            deviceName: 'iPhone 7 Simulator',
-            deviceOrientation: 'portrait',
-            platformName: 'iOS',
-            platformVersion: '10.2'
-        },
-        slAndroid4: {
-            base: 'SauceLabs',
-            browserName: 'Android',
-            platform: 'Linux',
-            version: '4.4'
-        },
-        slAndroid5: {
-            base: 'SauceLabs',
-            browserName: 'Android',
-            platform: 'Linux',
-            version: '5.1'
-        },
-        slAndroid6: {
-            base: 'SauceLabs',
-            browserName: 'Android',
-            platform: 'Linux',
-            version: '6.0'
-        },
         slChrome: {
             base: 'SauceLabs',
             browserName: 'chrome',
@@ -59,35 +21,22 @@ module.exports = function(config) {
             browserName: 'firefox',
             version: 'latest'
         },
-        slSafari8: {
+        slFirefoxBeta: {
+            base: 'SauceLabs',
+            browserName: 'firefox',
+            version: 'beta'
+        },
+        slSafari: {
             base: 'SauceLabs',
             browserName: 'safari',
-            platform: 'OS X 10.10',
-            version: '8.0'
+            platform: 'OS X 10.14',
+            version: 'latest'
         },
-        slSafari9: {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'OS X 10.11',
-            version: '9.0'
-        },
-        slSafari10: {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'macOS 10.12',
-            version: '10.0'
-        },
-        slEdge14: {
+        slEdge: {
             base: 'SauceLabs',
             browserName: 'microsoftedge',
             platform: 'Windows 10',
-            version: '14.14393'
-        },
-        slEdge13: {
-            base: 'SauceLabs',
-            browserName: 'microsoftedge',
-            platform: 'Windows 10',
-            version: '13.10586'
+            version: 'latest'
         },
         slIE11: {
             base: 'SauceLabs',
@@ -98,28 +47,23 @@ module.exports = function(config) {
         slIE10: {
             base: 'SauceLabs',
             browserName: 'internet explorer',
-            platform: 'Windows 8',
+            platform: 'Windows 7',
             version: '10'
         },
         slIE9: {
             base: 'SauceLabs',
             browserName: 'internet explorer',
             platform: 'Windows 7',
-            version: '9.0'
+            version: '10',
+            'x-ua-compatible': 'IE=EmulateIE9'
+        },
+        slIE8: {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 7',
+            version: '10',
+            'x-ua-compatible': 'IE=EmulateIE8'
         }
-        // Too unreliable on Sauce :(
-        // slIE8: {
-        //     base: 'SauceLabs',
-        //     browserName: 'internet explorer',
-        //     platform: 'Windows XP',
-        //     version: '8.0'
-        // }
-        //slIE7: {
-        //    base: 'SauceLabs',
-        //    browserName: 'internet explorer',
-        //    platform: 'Windows XP',
-        //    version: '7'
-        //}
     };
 
     config.set({
@@ -151,11 +95,13 @@ module.exports = function(config) {
             connectOptions: {
                 port: 5757,
                 logfile: 'sauce_connect.log'
-            }
+            },
+            build: process.env.TRAVIS_BUILD_ID || Math.floor((new Date).getTime() / 1000 - 1230768000).toString(),
+            tags: [process.env.TRAVIS_BRANCH || "local"]
         },
         customLaunchers: customLaunchers,
         browsers: Object.keys(customLaunchers),
-        reporters: ['progress', 'saucelabs', 'coverage'],
+        reporters: ['progress', 'saucelabs', 'coverage', 'coveralls'],
         preprocessors: {
             'stacktrace.js': 'coverage'
         },
